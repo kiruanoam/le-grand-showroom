@@ -305,6 +305,31 @@ label.flex + label.flex{margin-top:-6px}
 @media (max-width:640px){.lb figure{padding:0}.lb .nav{top:auto;bottom:calc(52px + env(safe-area-inset-bottom,0px));transform:none}}
 
 @media (prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}}
+
+.h-hero{height:min(76vh,58vw);min-height:320px;overflow:hidden;background:var(--fill)}
+.h-hero img{width:100%;height:100%;object-fit:cover;object-position:50% 42%;display:block}
+.h-lead{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,1fr);gap:var(--side);align-items:end;padding-block:clamp(36px,4.6vw,72px) clamp(56px,7vw,112px)}
+.h-lead h1{margin:0;font:400 clamp(26px,3.3vw,48px)/1.16 "SchoolBook GS",Georgia,serif;letter-spacing:.06em;text-transform:uppercase}
+.h-pitch p{margin:0;max-width:46ch;font-size:15px;line-height:1.6}
+.h-link{display:inline-block;margin-top:22px;text-transform:uppercase;letter-spacing:.18em;font-size:11.5px;color:var(--ink);text-decoration:none;border-bottom:1px solid var(--ink);padding-bottom:6px}
+.h-link:hover{opacity:.6}
+.h-label{display:flex;justify-content:space-between;gap:20px;border-top:1px solid var(--ink);padding-top:14px;margin-bottom:clamp(28px,3.4vw,52px)}
+.h-scale{display:grid;grid-template-columns:53fr 29fr 18fr;gap:clamp(16px,2vw,32px);align-items:end}
+.h-sp{display:block;text-decoration:none;color:var(--ink);min-width:0}
+.h-sp .im{aspect-ratio:3/2;overflow:hidden;background:var(--fill)}
+.h-sp .im img{width:100%;height:100%;object-fit:cover;display:block;transition:transform 1.4s cubic-bezier(.2,.7,.1,1)}
+.h-sp:hover .im img{transform:scale(1.03)}
+.h-sp .cp{display:flex;flex-direction:column;gap:5px;padding-top:16px;min-height:96px;font-size:13px;letter-spacing:.04em;line-height:1.35}
+.h-sp .cp b{font:400 15px/1.3 "SchoolBook GS",Georgia,serif;text-transform:uppercase;letter-spacing:.16em;margin-bottom:3px}
+@media (max-width:820px){
+  .h-hero{height:62vh}
+  .h-lead{grid-template-columns:1fr;gap:22px;align-items:start}
+  .h-label{flex-direction:column;gap:4px}
+  .h-scale{grid-template-columns:1fr;gap:34px}
+  .h-sp.s2{width:78%}.h-sp.s3{width:56%}
+  .h-sp .cp{min-height:0}
+  .home-meta .v{font-size:16px}
+}
 </style>
 
 <header class="top">
@@ -336,18 +361,21 @@ label.flex + label.flex{margin-top:-6px}
 <main>
   <!-- HOME -->
   <section class="view" data-view="home">
-    <div class="wrap hero">
-      <div class="statement">
+    <div class="h-hero"><img class="photo" src="img/sr-verriere-3-m.jpg" srcset="img/sr-verriere-3-s.jpg 720w, img/sr-verriere-3-m.jpg 1400w, img/sr-verriere-3.jpg 3200w" sizes="100vw" alt="La Verrière, grande salle sous verrière" fetchpriority="high" decoding="async"></div>
+    <div class="wrap">
+      <div class="h-lead">
         <h1>21–23 rue des Filles du Calvaire<br>Paris 75003</h1>
-        <div class="pitch"><p lang="fr">Grande salle sous verrière et deux boutiques. Location courte durée pour showrooms, dîners, réceptions, expositions et pop-up.</p>
-        <p lang="en">Glass-roofed hall and two boutiques. Short-term rental for showrooms, dinners, receptions, exhibitions and pop-ups.</p>
-        <div class="home-cta"><a class="btn" href="#reserver"><span lang="fr">Demander des dates</span><span lang="en">Request dates</span></a><a class="btn line" href="#infos"><span lang="fr">Inclus et options</span><span lang="en">Included and add-ons</span></a></div></div>
+        <div class="h-pitch">
+          <p lang="fr">Grande salle sous verrière et deux boutiques sur rue, dans le Haut-Marais. Location courte durée pour showrooms, dîners, réceptions, expositions et pop-up.</p>
+          <p lang="en">A glass-roofed hall and two street-front boutiques in the Haut-Marais. Short-term rental for showrooms, dinners, receptions, exhibitions and pop-ups.</p>
+          <a class="h-link" href="#reserver"><span lang="fr">Demander des dates</span><span lang="en">Request dates</span> →</a>
+        </div>
       </div>
-      <div class="frame"><img class="photo" src="img/sr-verriere-3-m.jpg" srcset="img/sr-verriere-3-s.jpg 720w, img/sr-verriere-3-m.jpg 1400w, img/sr-verriere-3.jpg 3200w" sizes="calc(100vw - 64px)" width="3200" height="2133" alt="La grande salle sous verrière" fetchpriority="high" decoding="async"></div>
-      <div class="tiles">
-        <a class="tile" href="#showroom"><div class="img"><img class="photo" src="img/sr-verriere-1-m.jpg" srcset="img/sr-verriere-1-s.jpg 720w, img/sr-verriere-1-m.jpg 1400w, img/sr-verriere-1.jpg 3200w" sizes="(max-width:820px) 100vw, 33vw" alt="La Verrière" loading="lazy" decoding="async"></div><div class="cap"><b>La Verrière</b><span class="muted"><span lang="fr">Environ 300 m² · 2 niveaux</span><span lang="en">About 300 m² · 2 levels</span></span><span class="muted"><span lang="fr">Showrooms, dîners, réceptions, expositions</span><span lang="en">Showrooms, dinners, receptions, exhibitions</span></span></div></a>
-        <a class="tile" href="#grande-boutique"><div class="img"><img class="photo" src="img/gb-09-m.jpg" srcset="img/gb-09-s.jpg 720w, img/gb-09-m.jpg 1400w, img/gb-09.jpg 2000w" sizes="(max-width:820px) 100vw, 33vw" alt="Grande boutique" loading="lazy" decoding="async"></div><div class="cap"><b><span lang="fr">Grande boutique</span><span lang="en">Large boutique</span></b><span class="muted"><span lang="fr">91,25 m² · vitrine d'angle sur rue</span><span lang="en">91.25 m² · corner shopfront</span></span><span class="muted"><span lang="fr">Pop-up, showrooms, journées presse</span><span lang="en">Pop-ups, showrooms, press days</span></span></div></a>
-        <a class="tile" href="#petite-boutique"><div class="img"><img class="photo" style="object-position:50% 50%" src="img/pb-13-m.jpg" srcset="img/pb-13-s.jpg 720w, img/pb-13-m.jpg 1400w, img/pb-13.jpg 2000w" sizes="(max-width:820px) 100vw, 33vw" alt="Petite boutique" loading="lazy" decoding="async"></div><div class="cap"><b><span lang="fr">Petite boutique</span><span lang="en">Small boutique</span></b><span class="muted"><span lang="fr">34,05 m² · entrée sur rue</span><span lang="en">34.05 m² · street entrance</span></span><span class="muted"><span lang="fr">Pop-up, journées presse</span><span lang="en">Pop-ups, press days</span></span></div></a>
+      <div class="h-label caps muted"><span><span lang="fr">Trois espaces</span><span lang="en">Three spaces</span></span><span><span lang="fr">Représentés à l'échelle de leur surface</span><span lang="en">Shown to the scale of their floor area</span></span></div>
+      <div class="h-scale">
+        <a class="h-sp s1" href="#showroom"><div class="im"><img class="photo" src="img/sr-verriere-1-m.jpg" srcset="img/sr-verriere-1-s.jpg 720w, img/sr-verriere-1-m.jpg 1400w, img/sr-verriere-1.jpg 3200w" sizes="(max-width:820px) 100vw, 52vw" alt="La Verrière" loading="lazy" decoding="async"></div><div class="cp"><b>La Verrière</b><span><span lang="fr">Environ 300 m², 2 niveaux</span><span lang="en">About 300 m², 2 levels</span></span><span class="muted"><span lang="fr">Showrooms, dîners, réceptions, expositions</span><span lang="en">Showrooms, dinners, receptions, exhibitions</span></span></div></a>
+        <a class="h-sp s2" href="#grande-boutique"><div class="im"><img class="photo" src="img/gb-09-m.jpg" srcset="img/gb-09-s.jpg 720w, img/gb-09-m.jpg 1400w, img/gb-09.jpg 2000w" sizes="(max-width:820px) 78vw, 29vw" alt="Grande boutique" loading="lazy" decoding="async"></div><div class="cp"><b><span lang="fr">Grande boutique</span><span lang="en">Large boutique</span></b><span>91,25 m²</span><span class="muted"><span lang="fr">Pop-up, showrooms, presse</span><span lang="en">Pop-ups, showrooms, press</span></span></div></a>
+        <a class="h-sp s3" href="#petite-boutique"><div class="im"><img class="photo" src="img/pb-13-m.jpg" srcset="img/pb-13-s.jpg 720w, img/pb-13-m.jpg 1400w, img/pb-13.jpg 2000w" sizes="(max-width:820px) 56vw, 18vw" alt="Petite boutique" loading="lazy" decoding="async"></div><div class="cp"><b><span lang="fr">Petite boutique</span><span lang="en">Small boutique</span></b><span>34,05 m²</span><span class="muted"><span lang="fr">Pop-up, presse</span><span lang="en">Pop-ups, press</span></span></div></a>
       </div>
       <div class="home-meta">
         <div><div class="caps muted"><span lang="fr">Capacité de La Verrière</span><span lang="en">La Verrière capacity</span></div><div class="v"><span lang="fr">80 et 120 personnes en cocktail, par niveau</span><span lang="en">80 and 120 standing, per level</span></div></div>
