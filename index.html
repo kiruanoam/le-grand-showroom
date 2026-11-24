@@ -265,7 +265,7 @@ label.flex input{accent-color:var(--ink);width:15px;height:15px}
 @media (max-width:640px){.cal-months{grid-template-columns:1fr}.cal-months .mon:nth-child(2){display:none}.cal{padding:14px 12px 6px}}
 .summary{background:var(--fill);padding:20px;display:grid;gap:14px}
 .summary pre{margin:0;white-space:pre-wrap;font:400 13.5px/1.7 var(--f);letter-spacing:.03em}
-.summary .acts{display:grid;grid-template-columns:1fr 1fr;gap:6px}
+.summary .acts{display:grid;grid-template-columns:1fr;gap:6px}.btn[disabled]{opacity:.45;pointer-events:none}
 .status{font-size:13px;color:var(--muted);min-height:1.3em}
 @media (max-width:900px){.booking{grid-template-columns:1fr}.choice{grid-template-columns:1fr}.row2{grid-template-columns:1fr}.summary .acts{grid-template-columns:1fr}}
 
@@ -457,8 +457,7 @@ label.flex + label.flex{margin-top:-6px}
           <div class="caps muted"><span lang="fr">Votre demande</span><span lang="en">Your request</span></div>
           <pre id="sumText"></pre>
           <div class="acts">
-            <a class="btn" id="waBtn" href="#" target="_blank" rel="noopener"><span lang="fr">Envoyer sur WhatsApp</span><span lang="en">Send on WhatsApp</span></a>
-            <button class="btn line" type="button" id="copyBtn"><span lang="fr">Copier</span><span lang="en">Copy</span></button>
+            <button class="btn" type="submit" id="sendBtn"><span lang="fr">Envoyer la demande</span><span lang="en">Send request</span></button>
           </div>
           <div class="status" id="status"></div>
         </div>
@@ -486,7 +485,7 @@ label.flex + label.flex{margin-top:-6px}
 
 <script>
 (function(){
-  const WA="33699321999";
+  const MAILTO="noam@bozostudio.com";
   const CAP={
     "sr-verriere-1":["Verrière et pavés de verre","Glass roof and glass floor blocks"],"sr-verriere-2":["Sous la verrière","Under the glass roof"],
     "sr-verriere-3":["Le grand volume","The main room"],"sr-verriere-4":["Verrières d'atelier","Steel-framed windows"],
@@ -742,15 +741,26 @@ label.flex + label.flex{margin-top:-6px}
     el.hidden=false;
     el.innerHTML=`<span class="muted">${T(n+" espaces sélectionnés",n+" spaces selected")}</span><b>${(g||pe)?fmtm(m):""}${sh?((g||pe)?" + La Verrière":"La Verrière"):""}${(g||pe)?`<span class="muted" style="font-size:12px"> ${T("sas et WC inclus","lobby and WCs incl.")}</span>`:""}</b>`;
   }
-  function updateSummary(){updateTotal();if($("#optForm"))renderOptForm(),bindOpts();const t=buildText();$("#sumText").textContent=t;$("#waBtn").href="https://wa.me/"+WA+"?text="+encodeURIComponent(t);
+  function updateSummary(){updateTotal();if($("#optForm"))renderOptForm(),bindOpts();const t=buildText();$("#sumText").textContent=t;
     try{localStorage.setItem("gs-draft",JSON.stringify(Object.assign(Object.fromEntries(["use","name","brand","email","tel","msg"].map(k=>[k,$("#"+k).value])),{spaces:$$("input[name=space]:checked").map(i=>i.value).join(","),periods,flex:$("#flex").checked,dossier:$("#dossier").checked,opts:[...picked],visit:$("#k-visit").checked})))}catch(e){}}
-  $("#req").addEventListener("input",updateSummary);$("#req").addEventListener("change",updateSummary);$("#req").addEventListener("submit",e=>e.preventDefault());
-  $("#waBtn").addEventListener("click",e=>{const ok=$$("input[name=space]:checked").length&&periods.length&&$("#name").value.trim();
-    if(!ok){e.preventDefault();$("#status").textContent=T("Indiquez au moins un espace, une période et votre nom.","Add at least one space, one period and your name.");return;}
-    $("#status").textContent=T("WhatsApp s'ouvre avec votre demande. Si rien ne s'ouvre, copiez-la.","WhatsApp opens with your request. If nothing opens, copy it.");});
-  $("#copyBtn").addEventListener("click",()=>{const t=buildText();const done=()=>$("#status").textContent=T("Demande copiée.","Request copied.");
-    const fail=()=>{const r=document.createRange();r.selectNodeContents($("#sumText"));const s=getSelection();s.removeAllRanges();s.addRange(r);$("#status").textContent=T("Texte sélectionné, copiez-le.","Text selected, copy it.");};
-    try{navigator.clipboard.writeText(t).then(done,fail)}catch(e){fail()}});
+  $("#req").addEventListener("input",updateSummary);$("#req").addEventListener("change",updateSummary);  $("#req").addEventListener("submit",async e=>{e.preventDefault();
+    const st=$("#status"),btn=$("#sendBtn"),mail=$("#email").value.trim(),nm=$("#name").value.trim();
+    if(!$$("input[name=space]:checked").length||!periods.length||!nm){st.textContent=T("Indiquez au moins un espace, une période et votre nom.","Add at least one space, one period and your name.");return;}
+    if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(mail)){st.textContent=T("Indiquez un email valide pour que nous puissions vous répondre.","Add a valid email so we can reply.");$("#email").focus();return;}
+    const t=buildText(),visit=$("#k-visit").checked;
+    btn.disabled=true;st.textContent=T("Envoi en cours.","Sending.");
+    try{
+      const r=await fetch("https://formsubmit.co/ajax/"+MAILTO,{method:"POST",headers:{"Content-Type":"application/json",Accept:"application/json"},
+        body:JSON.stringify({_subject:(visit?"Demande de visite":"Demande de location")+" · "+nm,_replyto:mail,_template:"box",_captcha:"false",Nom:nm,Email:mail,"Téléphone":$("#tel").value.trim(),"Maison, marque":$("#brand").value.trim(),Demande:t})});
+      const j=await r.json().catch(()=>({}));
+      if(!r.ok||String(j.success)!=="true")throw new Error("send");
+      st.textContent=T("Demande envoyée. Nous vous répondons par email.","Request sent. We will reply by email.");
+      try{localStorage.removeItem("gs-draft")}catch(e){}
+    }catch(err){
+      btn.disabled=false;
+      st.innerHTML=T("L'envoi n'a pas abouti. ","Sending failed. ")+`<a href="mailto:${MAILTO}?subject=${encodeURIComponent("Le Grand Showroom")}&body=${encodeURIComponent(t)}">${T("Envoyer par email","Send by email")}</a>`;
+    }});
+  $("#req").addEventListener("input",()=>{$("#sendBtn").disabled=false});
   try{const d=JSON.parse(localStorage.getItem("gs-draft")||"null");if(d){["use","name","brand","email","tel","msg"].forEach(k=>{if(d[k])$("#"+k).value=d[k]});(d.spaces||"").split(",").forEach(v=>{const i=$("#sp-"+v);if(i)i.checked=true});if(Array.isArray(d.periods))periods=d.periods.filter(p=>p.e>=TODAY);$("#flex").checked=!!d.flex;if(Array.isArray(d.opts))d.opts.forEach(k=>picked.add(k));if(d.dossier===false)$("#dossier").checked=false;if(d.visit)$("#k-visit").checked=true;}}catch(e){}
 
   let initial="fr";try{initial=localStorage.getItem("gs-lang")||"fr"}catch(e){}
