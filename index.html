@@ -85,7 +85,7 @@ header.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:50;backgroun
 .tile:hover .img img{transform:scale(1.035)}
 .tile .cap{display:flex;flex-direction:column;align-items:flex-start;gap:8px;padding:22px 0 0;border-top:1px solid var(--ink);margin-top:14px}
 .tile .cap b{font:400 15px/1.3 "SchoolBook GS",Georgia,serif;text-transform:uppercase;letter-spacing:.16em}
-.tile .cap .muted{font-size:13px;letter-spacing:.06em;line-height:1.3}
+.tile .cap .muted{font-size:13px;letter-spacing:.06em;line-height:1.3}.home-cta{display:flex;gap:12px;flex-wrap:wrap;margin-top:26px}.statement .pitch{align-self:end}.hero .statement{padding-block:clamp(24px,3.4vw,52px) clamp(32px,4vw,60px)}.hero .tiles{margin-top:clamp(48px,6vw,88px)}
 @media (max-width:820px){.tile + .tile{margin-top:24px}}
 .home-meta{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));border-top:1px solid var(--hair);margin-top:clamp(56px,8vw,112px)}
 .home-meta div{padding:18px 16px 0 0}
@@ -337,22 +337,23 @@ label.flex + label.flex{margin-top:-6px}
   <!-- HOME -->
   <section class="view" data-view="home">
     <div class="wrap hero">
-      <div class="frame"><img class="photo" src="img/sr-verriere-2-m.jpg" srcset="img/sr-verriere-2-s.jpg 720w, img/sr-verriere-2-m.jpg 1400w, img/sr-verriere-2.jpg 3200w" sizes="calc(100vw - 64px)" width="3200" height="2133" alt="La grande salle sous verrière" fetchpriority="high" decoding="async"></div>
       <div class="statement">
         <h1>21–23 rue des Filles du Calvaire<br>Paris 75003</h1>
-        <p lang="fr">Grande salle sous verrière et deux boutiques. Location courte durée pour showrooms, dîners, réceptions, expositions et pop-up.</p>
+        <div class="pitch"><p lang="fr">Grande salle sous verrière et deux boutiques. Location courte durée pour showrooms, dîners, réceptions, expositions et pop-up.</p>
         <p lang="en">Glass-roofed hall and two boutiques. Short-term rental for showrooms, dinners, receptions, exhibitions and pop-ups.</p>
+        <div class="home-cta"><a class="btn" href="#reserver"><span lang="fr">Demander des dates</span><span lang="en">Request dates</span></a><a class="btn line" href="#infos"><span lang="fr">Inclus et options</span><span lang="en">Included and add-ons</span></a></div></div>
       </div>
+      <div class="frame"><img class="photo" src="img/sr-verriere-3-m.jpg" srcset="img/sr-verriere-3-s.jpg 720w, img/sr-verriere-3-m.jpg 1400w, img/sr-verriere-3.jpg 3200w" sizes="calc(100vw - 64px)" width="3200" height="2133" alt="La grande salle sous verrière" fetchpriority="high" decoding="async"></div>
       <div class="tiles">
-        <a class="tile" href="#showroom"><div class="img"><img class="photo" src="img/sr-verriere-1-m.jpg" srcset="img/sr-verriere-1-s.jpg 720w, img/sr-verriere-1-m.jpg 1400w, img/sr-verriere-1.jpg 3200w" sizes="(max-width:820px) 100vw, 33vw" alt="La Verrière" loading="lazy" decoding="async"></div><div class="cap"><b>La Verrière</b><span class="muted"><span lang="fr">Environ 300 m² · 2 niveaux</span><span lang="en">About 300 m² · 2 levels</span></span></div></a>
-        <a class="tile" href="#grande-boutique"><div class="img"><img class="photo" src="img/gb-09-m.jpg" srcset="img/gb-09-s.jpg 720w, img/gb-09-m.jpg 1400w, img/gb-09.jpg 2000w" sizes="(max-width:820px) 100vw, 33vw" alt="Grande boutique" loading="lazy" decoding="async"></div><div class="cap"><b><span lang="fr">Grande boutique</span><span lang="en">Large boutique</span></b><span class="muted">91,25 m²</span></div></a>
-        <a class="tile" href="#petite-boutique"><div class="img"><img class="photo" style="object-position:50% 50%" src="img/pb-13-m.jpg" srcset="img/pb-13-s.jpg 720w, img/pb-13-m.jpg 1400w, img/pb-13.jpg 2000w" sizes="(max-width:820px) 100vw, 33vw" alt="Petite boutique" loading="lazy" decoding="async"></div><div class="cap"><b><span lang="fr">Petite boutique</span><span lang="en">Small boutique</span></b><span class="muted">34,05 m²</span></div></a>
+        <a class="tile" href="#showroom"><div class="img"><img class="photo" src="img/sr-verriere-1-m.jpg" srcset="img/sr-verriere-1-s.jpg 720w, img/sr-verriere-1-m.jpg 1400w, img/sr-verriere-1.jpg 3200w" sizes="(max-width:820px) 100vw, 33vw" alt="La Verrière" loading="lazy" decoding="async"></div><div class="cap"><b>La Verrière</b><span class="muted"><span lang="fr">Environ 300 m² · 2 niveaux</span><span lang="en">About 300 m² · 2 levels</span></span><span class="muted"><span lang="fr">Showrooms, dîners, réceptions, expositions</span><span lang="en">Showrooms, dinners, receptions, exhibitions</span></span></div></a>
+        <a class="tile" href="#grande-boutique"><div class="img"><img class="photo" src="img/gb-09-m.jpg" srcset="img/gb-09-s.jpg 720w, img/gb-09-m.jpg 1400w, img/gb-09.jpg 2000w" sizes="(max-width:820px) 100vw, 33vw" alt="Grande boutique" loading="lazy" decoding="async"></div><div class="cap"><b><span lang="fr">Grande boutique</span><span lang="en">Large boutique</span></b><span class="muted"><span lang="fr">91,25 m² · vitrine d'angle sur rue</span><span lang="en">91.25 m² · corner shopfront</span></span><span class="muted"><span lang="fr">Pop-up, showrooms, journées presse</span><span lang="en">Pop-ups, showrooms, press days</span></span></div></a>
+        <a class="tile" href="#petite-boutique"><div class="img"><img class="photo" style="object-position:50% 50%" src="img/pb-13-m.jpg" srcset="img/pb-13-s.jpg 720w, img/pb-13-m.jpg 1400w, img/pb-13.jpg 2000w" sizes="(max-width:820px) 100vw, 33vw" alt="Petite boutique" loading="lazy" decoding="async"></div><div class="cap"><b><span lang="fr">Petite boutique</span><span lang="en">Small boutique</span></b><span class="muted"><span lang="fr">34,05 m² · entrée sur rue</span><span lang="en">34.05 m² · street entrance</span></span><span class="muted"><span lang="fr">Pop-up, journées presse</span><span lang="en">Pop-ups, press days</span></span></div></a>
       </div>
       <div class="home-meta">
-        <div><div class="caps muted"><span lang="fr">Adresse</span><span lang="en">Address</span></div><div class="v">21-23 rue des Filles du Calvaire</div></div>
+        <div><div class="caps muted"><span lang="fr">Capacité de La Verrière</span><span lang="en">La Verrière capacity</span></div><div class="v"><span lang="fr">80 et 120 personnes en cocktail, par niveau</span><span lang="en">80 and 120 standing, per level</span></div></div>
+        <div><div class="caps muted"><span lang="fr">Horaires</span><span lang="en">Hours</span></div><div class="v"><span lang="fr">Tous les jours, 8 h à 22 h</span><span lang="en">Every day, 8 am to 10 pm</span></div></div>
         <div><div class="caps muted"><span lang="fr">Quartier</span><span lang="en">District</span></div><div class="v">Haut-Marais, Paris 3</div></div>
-        <div><div class="caps muted"><span lang="fr">Boutiques réunies</span><span lang="en">Both boutiques</span></div><div class="v">136,08 m²</div></div>
-        <div><div class="caps muted">Métro</div><div class="v">Filles du Calvaire</div></div>
+        <div><div class="caps muted">Métro</div><div class="v"><span lang="fr">Filles du Calvaire, ligne 8</span><span lang="en">Filles du Calvaire, line 8</span></div></div>
       </div>
     </div>
   </section>
