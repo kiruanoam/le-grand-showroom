@@ -493,7 +493,7 @@ label.flex + label.flex{margin-top:-6px}
 
 <script>
 (function(){
-  const MAILTO="noam@bozostudio.com";
+  const MAILTO="noam@bozostudio.com";const FORM_URL="";
   const CAP={
     "sr-verriere-1":["Verrière et pavés de verre","Glass roof and glass floor blocks"],"sr-verriere-2":["Sous la verrière","Under the glass roof"],
     "sr-verriere-3":["Le grand volume","The main room"],"sr-verriere-4":["Verrières d'atelier","Steel-framed windows"],
@@ -756,9 +756,12 @@ label.flex + label.flex{margin-top:-6px}
     if(!$$("input[name=space]:checked").length||!periods.length||!nm){st.textContent=T("Indiquez au moins un espace, une période et votre nom.","Add at least one space, one period and your name.");return;}
     if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(mail)){st.textContent=T("Indiquez un email valide pour que nous puissions vous répondre.","Add a valid email so we can reply.");$("#email").focus();return;}
     const t=buildText(),visit=$("#k-visit").checked;
+    const mailHref=`mailto:${MAILTO}?subject=${encodeURIComponent((visit?"Demande de visite":"Demande de location")+" · "+nm)}&body=${encodeURIComponent(t)}`;
+    if(!FORM_URL){location.href=mailHref;st.textContent=T("Votre messagerie s'ouvre avec la demande, il reste à l'envoyer.","Your mail app opens with the request, ready to send.");return;}
     btn.disabled=true;st.textContent=T("Envoi en cours.","Sending.");
     try{
-      const r=await fetch("https://formsubmit.co/ajax/"+MAILTO,{method:"POST",headers:{"Content-Type":"application/json",Accept:"application/json"},
+      const ac=new AbortController();setTimeout(()=>ac.abort(),12000);
+      const r=await fetch(FORM_URL,{signal:ac.signal,method:"POST",headers:{"Content-Type":"application/json",Accept:"application/json"},
         body:JSON.stringify({_subject:(visit?"Demande de visite":"Demande de location")+" · "+nm,_replyto:mail,_template:"box",_captcha:"false",Nom:nm,Email:mail,"Téléphone":$("#tel").value.trim(),"Maison, marque":$("#brand").value.trim(),Demande:t})});
       const j=await r.json().catch(()=>({}));
       if(!r.ok||String(j.success)!=="true")throw new Error("send");
@@ -766,7 +769,7 @@ label.flex + label.flex{margin-top:-6px}
       try{localStorage.removeItem("gs-draft")}catch(e){}
     }catch(err){
       btn.disabled=false;
-      st.innerHTML=T("L'envoi n'a pas abouti. ","Sending failed. ")+`<a href="mailto:${MAILTO}?subject=${encodeURIComponent("Le Grand Showroom")}&body=${encodeURIComponent(t)}">${T("Envoyer par email","Send by email")}</a>`;
+      st.innerHTML=T("L'envoi n'a pas abouti. ","Sending failed. ")+`<a href="${mailHref}">${T("Envoyer par email","Send by email")}</a>`;
     }});
   $("#req").addEventListener("input",()=>{$("#sendBtn").disabled=false});
   try{const d=JSON.parse(localStorage.getItem("gs-draft")||"null");if(d){["use","name","brand","email","tel","msg"].forEach(k=>{if(d[k])$("#"+k).value=d[k]});(d.spaces||"").split(",").forEach(v=>{const i=$("#sp-"+v);if(i)i.checked=true});if(Array.isArray(d.periods))periods=d.periods.filter(p=>p.e>=TODAY);$("#flex").checked=!!d.flex;if(Array.isArray(d.opts))d.opts.forEach(k=>picked.add(k));if(d.dossier===false)$("#dossier").checked=false;if(d.visit)$("#k-visit").checked=true;}}catch(e){}
